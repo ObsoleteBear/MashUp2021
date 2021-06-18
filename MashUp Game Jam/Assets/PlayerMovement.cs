@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame
- 
-    public CharacterController Player;
-    public float playerSpeed;
-    public Vector2 playerVelocity;
-    public float gravityScale;
-    public bool grounded; 
-   void Start()
-    {
-        Player = GetComponent<CharacterController>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Vector2 move = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
-        Player.Move(move * Time.deltaTime * playerSpeed);
-        playerVelocity.y += gravityScale * Time.deltaTime;
-        Player.Move(playerVelocity * Time.deltaTime);
-        grounded = Player.isGrounded;
-        if (grounded && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
+	public CharacterController2D controller;
 
+	public float runSpeed = 40f;
 
-    }  
+	float horizontalMove = 0f;
+	bool jump = false;
+	bool crouch = false;
+
+	// Update is called once per frame
+	void Update()
+	{
+
+		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+		if (Input.GetButtonDown("Jump"))
+		{
+			jump = true;
+		}
+
+		if (Input.GetButtonDown("Crouch"))
+		{
+			crouch = true;
+		}
+		else if (Input.GetButtonUp("Crouch"))
+		{
+			crouch = false;
+		}
+
+	}
+
+	void FixedUpdate()
+	{
+		// Move our character
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		jump = false;
+	}
 }
-    
