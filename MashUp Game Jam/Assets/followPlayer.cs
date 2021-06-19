@@ -14,6 +14,7 @@ public class followPlayer : MonoBehaviour
     public float jumpForce;
     public bool hasJump;
     public float playerHeight;
+    public bool doJump;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,14 @@ public class followPlayer : MonoBehaviour
         jump = new Vector2(0, jumpForce);
     }
 
+    public void FixedUpdate()
+    {
+        if (doJump == true)
+        {
+            rb.AddForce(jump);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -32,8 +41,16 @@ public class followPlayer : MonoBehaviour
 
             if (hasJump == true)
             {
-                rb.AddForce(jump);
+                doJump = true;
             }
+            else
+            {
+                doJump = false;
+            }
+        }
+        else
+        {
+            doJump = false;
         }
 
         if (player == null)

@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 920341058}
     - target: {fileID: 4520686724046990882, guid: d9af585afb4db67468d523714687746e, type: 3}
       propertyPath: jumpForce
-      value: 25
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4520686724046990882, guid: d9af585afb4db67468d523714687746e, type: 3}
       propertyPath: playerHeight
@@ -239,7 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 920341058}
     - target: {fileID: 4520686724046990882, guid: d9af585afb4db67468d523714687746e, type: 3}
       propertyPath: jumpForce
-      value: 25
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4520686724046990882, guid: d9af585afb4db67468d523714687746e, type: 3}
       propertyPath: playerHeight
@@ -530,6 +530,7 @@ MonoBehaviour:
   Grabbed: 0
   colliderTag: 
   Player: {fileID: 0}
+  weaponManager: {fileID: 0}
 --- !u!1 &920341058
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920341058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.449, y: 0.056, z: 0}
+  m_LocalPosition: {x: 0.449, y: -2.283, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 627565774}
@@ -882,6 +883,7 @@ MonoBehaviour:
   Grabbed: 0
   colliderTag: 
   Player: {fileID: 0}
+  weaponManager: {fileID: 0}
 --- !u!1 &1382633703
 GameObject:
   m_ObjectHideFlags: 0
