@@ -54,7 +54,7 @@ public class WeaponManager : MonoBehaviour
         if (isHolding == true && Input.GetMouseButton(0))
         {
             attackCollider.enabled = true;
-            //NOTE TO PAUL: MAKE THIS ACTIVATE THE ATTACK ANIMATION
+            //NOTE TO PAUL: MAKE THIS ACTIVATE THE ATTACK ANIMATION - sans
         }
     }
 }

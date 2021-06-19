@@ -7,10 +7,13 @@ public class GrabbableObject : MonoBehaviour
 
     public bool Grabbed = false;
     public string colliderTag;
+    public GameObject Player;
+    public WeaponManager weaponManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Player = GameObject.FindWithTag("Player");
+        weaponManager = Player.GetComponent<WeaponManager>();
     }
 
     public void OnTriggerStay2D(Collider2D Collider)
@@ -43,41 +46,30 @@ public class GrabbableObject : MonoBehaviour
             {
                 if (colliderTag == "Player")
                 {
-                    Grabbed = true;
+                    if (weaponManager.isHolding == false)
+                    {
+                        Grabbed = true;
+                        
+                    }
                 }
             }
         }
+    if (Grabbed == true)
+        {
+            gameObject.transform.SetParent(Player.transform);
+            gameObject.transform.localPosition = new Vector2(0.327f, 0.515f);
+            gameObject.transform.localScale = new Vector2 (0.6f, 0.6f);
+        }
+    else
+        {
+            gameObject.transform.SetParent(null);
+            gameObject.transform.localScale = new Vector2(1f, 1f);
+        }        
+                
     }
+
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //   `oooooooo /            / oooooooo`                        
 //                   :sss``+++hMMMMNsssss`  -sssNMMMMMMy +``sss:
 //                 .hmMMMhhho.::::::::::   `::::::::::` yhMMMmh.
