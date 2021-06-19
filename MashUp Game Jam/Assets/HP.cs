@@ -33,6 +33,7 @@ using UnityEngine;
         if (playerIsDead==true)
         {
             playerMovement.enabled = false;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(gameObject, 2);
         }
     }

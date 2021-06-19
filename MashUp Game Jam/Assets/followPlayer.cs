@@ -21,7 +21,14 @@ public class followPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerPosition = new Vector2(player.transform.position.x, transform.position.y);
+        if (player == null)
+        {
+
+        }
+        else
+        {
+            playerPosition = new Vector2(player.transform.position.x, transform.position.y);
+        }
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
     }    
