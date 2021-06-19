@@ -596,10 +596,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastHit: 0
-  iFrames: 1
+  iFrames: 0.5
   playerIsDead: 0
   rb: {fileID: 0}
-  dmg: 15
+  dmg: 5
   playerMovement: {fileID: 0}
   Health: 100
 --- !u!1 &1421046296
