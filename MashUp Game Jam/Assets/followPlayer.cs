@@ -36,34 +36,39 @@ public class followPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y > transform.position.y + playerHeight)
-        {
-
-            if (hasJump == true)
-            {
-                doJump = true;
-            }
-            else
-            {
-                doJump = false;
-            }
-        }
-        else
-        {
-            doJump = false;
-        }
-
         if (player == null)
         {
 
         }
         else
         {
-            playerPosition = new Vector2(player.transform.position.x, transform.position.y);
-        }
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
+            if (player.transform.position.y > transform.position.y + playerHeight)
+            {
+                if (hasJump == true)
+                {
+                    doJump = true;
+                }
+                else
+                {
+                    doJump = false;
+                }
+            }
+            else
+            {
+                doJump = false;
+            }
 
+            if (player == null)
+            {
+
+            }
+            else
+            {
+                playerPosition = new Vector2(player.transform.position.x, transform.position.y);
+            }
+            float step = speed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
+        }
 
     }
 
