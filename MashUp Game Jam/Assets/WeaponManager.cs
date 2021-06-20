@@ -9,6 +9,9 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     public string triggerTag;
 
+    public int damage;
+    public Vector2 Knockback;
+
     public PolygonCollider2D attackCollider;
 
     public List<float> itemDistance = new List<float>();
@@ -36,10 +39,9 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isHolding == true && Input.GetMouseButton(0))
+        if (isHolding == true && Input.GetMouseButtonDown(0))
         {
             attackCollider.enabled = true;
-
         }
     }
 }

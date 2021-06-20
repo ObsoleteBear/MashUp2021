@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public float lastJump;
 	public HP hp;
+	public PolygonCollider2D Attack;
 
 	float horizontalMove = 0f;
 	bool jump = false;
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
 		hp = GetComponent<HP>();
 		animator = GetComponent<Animator>();
+		Attack = GetComponentInChildren<PolygonCollider2D>();
     }
 
     // Update is called once per frame
@@ -87,7 +89,8 @@ public class PlayerMovement : MonoBehaviour
 	public void AttackEnd()
     {
 		animator.SetBool("isAttacking", false);
-    }
+		Attack.enabled = false;
+	}
 	public void DamageEnd()
     {
 		animator.SetBool("Hurt", false);
