@@ -11,6 +11,7 @@ public class WeaponManager : MonoBehaviour
 
     public PolygonCollider2D attackCollider;
 
+    public List<float> itemDistance = new List<float>();
 
     public void OnTriggerStay2D(Collider2D trigger)
     {
@@ -35,26 +36,22 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKey("e"))
-        {
-            if (isHolding == true)
-            {
-                isHolding = false;
-            }
-            else
-            {
-                if (triggerTag == "Grabbables")
-                {
-                    isHolding = true;
-                }
-            }
-        }
+        //if (Input.GetKey("e"))
+        //{
+        //    if (isHolding == true)
+        //    {
+        //        isHolding = false;
+        //    }
+        //    else if (triggerTag == "Grabbables")
+        //        {
+        //            isHolding = true;
+        //        }
+        //    }
 
         if (isHolding == true && Input.GetMouseButton(0))
         {
             attackCollider.enabled = true;
-            //NOTE TO PAUL: MAKE THIS ACTIVATE THE ATTACK ANIMATION - sans
+
         }
     }
 }

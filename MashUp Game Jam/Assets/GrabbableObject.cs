@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GrabbableObject : MonoBehaviour
@@ -9,6 +10,7 @@ public class GrabbableObject : MonoBehaviour
     public string colliderTag;
     public GameObject Player;
     public WeaponManager weaponManager;
+    public float distanceToPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,37 +34,60 @@ public class GrabbableObject : MonoBehaviour
         }            
     }
 
-
+    public void LateUpdate()
+    {
+        weaponManager.itemDistance.Clear();
+    }
     // Update is called once per frame
     void Update()
     {
+        if (Player == null)
+        { 
+        
+        }else
+        {
+            distanceToPlayer = Vector2.Distance(Player.transform.position, transform.position);
+        }
+        weaponManager.itemDistance.Add(distanceToPlayer);
         if (Input.GetKeyDown("e"))
         {
-            if (Grabbed == true)
+            Debug.Log("Epress");
+            if (Grabbed == false)
             {
-                 Grabbed = false;
-            }
-            else
-            {
-                if (colliderTag == "Player")
+                if (weaponManager.isHolding == false)
                 {
-                    if (weaponManager.isHolding == false)
+                    Debug.Log(weaponManager.isHolding);
+
+                    if (colliderTag == "Player")
                     {
-                        Grabbed = true;
-                        
+                        if (weaponManager.isHolding == false)
+                        {
+                            if (distanceToPlayer >= weaponManager.itemDistance.Min())
+                            {
+                                Debug.Log("Grabbed an  object");
+                                Grabbed = true;
+                                weaponManager.isHolding = true;
+                            }
+                        }
                     }
                 }
+            } else 
+            {
+                weaponManager.isHolding = false;
+                Grabbed = false;
+                Debug.Log(weaponManager.isHolding);
+                Debug.Log(Grabbed);
             }
         }
     if (Grabbed == true)
         {
-            gameObject.transform.SetParent(Player.transform);
+            gameObject.transform.parent = Player.transform;
             gameObject.transform.localPosition = new Vector2(0.327f, 0.515f);
             gameObject.transform.localScale = new Vector2 (0.6f, 0.6f);
         }
     else
         {
-            gameObject.transform.SetParent(null);
+            gameObject.transform.parent = null;
             gameObject.transform.localScale = new Vector2(1f, 1f);
         }        
                 

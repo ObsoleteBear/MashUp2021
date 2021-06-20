@@ -37,19 +37,4 @@ using UnityEngine;
             Destroy(gameObject, 2);
         }
     }
-    public void OnTriggerStay2D (Collider2D trigger)
-    {
-        if (trigger.gameObject.tag == "Enemies")
-        {
-            if (lastHit < Time.time - iFrames)
-            {
-                Health = Health -dmg;
-                lastHit = Time.time;
-            }
-
-        }
-
-    
-        
-    }
 }

@@ -15,6 +15,8 @@ public class followPlayer : MonoBehaviour
     public bool hasJump;
     public float playerHeight;
     public bool doJump;
+    public HP hp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class followPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         jump = new Vector2(0, jumpForce);
+        hp = player.GetComponent<HP>();
     }
 
     public void FixedUpdate()
@@ -36,31 +39,31 @@ public class followPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y > transform.position.y + playerHeight)
-        {
-
-            if (hasJump == true)
-            {
-                doJump = true;
-            }
-            else
-            {
-                doJump = false;
-            }
-        }
-        else
-        {
-            doJump = false;
-        }
-
         if (player == null)
         {
 
         }
         else
         {
+            if (player.transform.position.y > transform.position.y + playerHeight)
+            {
+
+                if (hasJump == true)
+                {
+                    doJump = true;
+                }
+                else
+                {
+                    doJump = false;
+                }
+            }
+            else
+            {
+                doJump = false;
+            }
             playerPosition = new Vector2(player.transform.position.x, transform.position.y);
         }
+        
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
 
@@ -83,7 +86,18 @@ public class followPlayer : MonoBehaviour
         }
     }
 
+    public void OnTriggerStay2D(Collider2D trigger)
+    {
+        if (trigger.gameObject.tag == ("Player"))
+        {
+            if (hp.lastHit < Time.time - hp.iFrames)
+            {
+                hp.Health = hp.Health - hp.dmg;
+                hp.lastHit = Time.time;
+            }
 
+        }
+    }
 
 
 }
