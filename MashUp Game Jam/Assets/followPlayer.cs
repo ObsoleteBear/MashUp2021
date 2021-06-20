@@ -16,6 +16,10 @@ public class followPlayer : MonoBehaviour
     public float playerHeight;
     public bool doJump;
     public HP hp;
+    public int dmg;
+    public Rigidbody2D playerRb;
+    public Vector2 Knockback;
+    public Animator playerAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,8 @@ public class followPlayer : MonoBehaviour
 
         jump = new Vector2(0, jumpForce);
         hp = player.GetComponent<HP>();
+        playerRb = player.GetComponent<Rigidbody2D>();
+        playerAnimator = player.GetComponent<Animator>();
     }
 
     public void FixedUpdate()
@@ -92,8 +98,16 @@ public class followPlayer : MonoBehaviour
         {
             if (hp.lastHit < Time.time - hp.iFrames)
             {
-                hp.Health = hp.Health - hp.dmg;
+                hp.Health = hp.Health - dmg;
                 hp.lastHit = Time.time;
+                playerAnimator.SetBool("Hurt", true);
+                if (transform.position.x < player.transform.position.x)
+                {
+                    playerRb.AddForce(Knockback, ForceMode2D.Impulse);
+                } else
+                {
+                    playerRb.AddForce(new Vector2 (-Knockback.x, Knockback.y), ForceMode2D.Impulse);
+                }
             }
 
         }

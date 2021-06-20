@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class GrabbableObject : MonoBehaviour
@@ -11,11 +12,16 @@ public class GrabbableObject : MonoBehaviour
     public GameObject Player;
     public WeaponManager weaponManager;
     public float distanceToPlayer;
+    public float rotateSpeed;
+    public Animator animator;
+    public Animator playerAnimator;
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindWithTag("Player");
         weaponManager = Player.GetComponent<WeaponManager>();
+        animator = gameObject.GetComponent<Animator>();
+        playerAnimator = Player.GetComponent<Animator>();
     }
 
     public void OnTriggerStay2D(Collider2D Collider)
@@ -60,14 +66,11 @@ public class GrabbableObject : MonoBehaviour
 
                     if (colliderTag == "Player")
                     {
-                        if (weaponManager.isHolding == false)
+                        if (distanceToPlayer >= weaponManager.itemDistance.Min())
                         {
-                            if (distanceToPlayer >= weaponManager.itemDistance.Min())
-                            {
-                                Debug.Log("Grabbed an  object");
-                                Grabbed = true;
-                                weaponManager.isHolding = true;
-                            }
+                            Debug.Log("Grabbed an  object");
+                            Grabbed = true;
+                            weaponManager.isHolding = true;
                         }
                     }
                 }
@@ -84,6 +87,10 @@ public class GrabbableObject : MonoBehaviour
             gameObject.transform.parent = Player.transform;
             gameObject.transform.localPosition = new Vector2(0.327f, 0.515f);
             gameObject.transform.localScale = new Vector2 (0.6f, 0.6f);
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetBool("Attack", true);
+            }
         }
     else
         {
@@ -93,8 +100,16 @@ public class GrabbableObject : MonoBehaviour
                 
     }
 
-    
+public void OnAttackEnd()
+    {
+        animator.SetBool("Attack", false);
+    }    
+    public void AttackStarted()
+    {
+        playerAnimator.SetBool("isAttacking", true);
+    }
 }
+
 //   `oooooooo /            / oooooooo`                        
 //                   :sss``+++hMMMMNsssss`  -sssNMMMMMMy +``sss:
 //                 .hmMMMhhho.::::::::::   `::::::::::` yhMMMmh.

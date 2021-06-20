@@ -11,35 +11,71 @@ public class PlayerMovement : MonoBehaviour
 
 	public Animator animator;
 
+	public float lastJump;
+	public HP hp;
+
 	float horizontalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
     private void Start()
     {
+		hp = GetComponent<HP>();
 		animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
 	{
-
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
-		if (Input.GetButtonDown("Jump"))
+		if (hp.playerIsDead == true)
 		{
-			jump = true;
+			animator.SetBool("Dead", true);
 		}
-
-		if (Input.GetButtonDown("Crouch"))
+		else
 		{
-			crouch = true;
-		}
-		else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
-		}
-		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
+			if (Input.GetButtonDown("Jump"))
+			{
+				jump = true;
+				animator.SetBool("Jump", true);
+				lastJump = Time.time;
+			}
+
+			if (Input.GetButton("Crouch"))
+			{
+				if (controller.m_Grounded == true)
+				{
+					crouch = true;
+				}
+				else
+				{
+					crouch = false;
+				}
+			}
+			else if (Input.GetButtonUp("Crouch"))
+			{
+				if (controller.m_Grounded == true)
+				{
+					crouch = false;
+				}
+			}
+			animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+			if (controller.m_Grounded == true)
+			{
+				if (Time.time > lastJump + 0.2)
+				{
+					animator.SetBool("Jump", false);
+				}
+			}
+			if (crouch == true)
+			{
+				animator.SetBool("Crouch", true);
+			}
+			else
+			{
+				animator.SetBool("Crouch", false);
+			}
+		}
 	}
 
 	void FixedUpdate()
@@ -48,4 +84,16 @@ public class PlayerMovement : MonoBehaviour
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
 		jump = false;
 	}
+	public void AttackEnd()
+    {
+		animator.SetBool("isAttacking", false);
+    }
+	public void DamageEnd()
+    {
+		animator.SetBool("Hurt", false);
+    }
+	public void DestroyPlayer()
+    {
+
+    }
 }
