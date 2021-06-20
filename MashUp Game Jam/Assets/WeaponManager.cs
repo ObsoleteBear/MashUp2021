@@ -9,8 +9,6 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     public string triggerTag;
 
-    public Animator attackAnimator;
-
     public PolygonCollider2D attackCollider;
 
 
@@ -38,7 +36,7 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown("e"))
+        if (Input.GetKey("e"))
         {
             if (isHolding == true)
             {
@@ -53,15 +51,10 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        if (isHolding == true && Input.GetMouseButtonDown(0))
+        if (isHolding == true && Input.GetMouseButton(0))
         {
             attackCollider.enabled = true;
-            attackAnimator.SetBool("IsAttacking", true);
-        }
-        if (isHolding == true && Input.GetMouseButtonUp(0))
-        {
-            attackCollider.enabled = false;
-            attackAnimator.SetBool("IsAttacking", false);
+            //NOTE TO PAUL: MAKE THIS ACTIVATE THE ATTACK ANIMATION - sans
         }
     }
 }
