@@ -50,3 +50,6 @@ TagManager:
   - name: Riverperson
     uniqueID: 2492563835
     locked: 0
+  - name: Attack
+    uniqueID: 425974673
+    locked: 0

@@ -12,7 +12,6 @@ using UnityEngine;
     public Rigidbody2D rb;
     public int dmg;
     public PlayerMovement playerMovement;
-    public bool inEnemy;
 
 
     public int Health = 100; 
@@ -26,15 +25,6 @@ using UnityEngine;
     // Update is called once per frame
     void Update()
     {
-        if (inEnemy == true)
-        {
-
-            if (lastHit < Time.time - iFrames)
-            {
-                Health = Health - dmg;
-                lastHit = Time.time;
-            }
-        }
         if (Health < 1)
         {
             playerIsDead = true;
@@ -51,14 +41,15 @@ using UnityEngine;
     {
         if (trigger.gameObject.tag == "Enemies")
         {
-            inEnemy = true;
-        }    
-    }
-    public void OnTriggerExit2D(Collider2D trigger)
-    {
-        if (trigger.gameObject.tag == "Enemies")
-        {
-            inEnemy = false;
+            if (lastHit < Time.time - iFrames)
+            {
+                Health = Health -dmg;
+                lastHit = Time.time;
+            }
+
         }
+
+    
+        
     }
 }
