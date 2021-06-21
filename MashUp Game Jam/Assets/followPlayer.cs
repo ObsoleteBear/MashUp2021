@@ -20,6 +20,7 @@ public class followPlayer : MonoBehaviour
     public Rigidbody2D playerRb;
     public Vector2 Knockback;
     public Animator playerAnimator;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +28,12 @@ public class followPlayer : MonoBehaviour
         position = gameObject.transform.position;
 
         rb = GetComponent<Rigidbody2D>();
-
+        player = GameObject.FindWithTag("Player");
         jump = new Vector2(0, jumpForce);
         hp = player.GetComponent<HP>();
         playerRb = player.GetComponent<Rigidbody2D>();
         playerAnimator = player.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     public void FixedUpdate()
@@ -45,12 +47,22 @@ public class followPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.x * 100f);
+
         if (player == null)
         {
 
         }
         else
         {
+            if (transform.position.x < player.transform.position.x)
+            {
+                animator.SetBool("FacingRight", true);
+            }
+            else
+            {
+                animator.SetBool("FacingRight", false);
+            }
             if (player.transform.position.y > transform.position.y + playerHeight)
             {
 
@@ -113,5 +125,8 @@ public class followPlayer : MonoBehaviour
         }
     }
 
-
+    public void HurtAnimationFinish()
+    {
+        animator.SetBool("Hurt", false);
+    }
 }

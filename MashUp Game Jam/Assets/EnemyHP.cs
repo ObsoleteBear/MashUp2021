@@ -13,12 +13,15 @@ public class EnemyHP : MonoBehaviour
     public GameObject Player;
 
     public WeaponManager weapon;
+
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindWithTag("Player");
         weapon = Player.GetComponent<WeaponManager>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class EnemyHP : MonoBehaviour
             {
                 enemyHP = enemyHP - weapon.damage;
                 lastHit = Time.time;
-                //playerAnimator.SetBool("Hurt", true);
+                animator.SetBool("Hurt", true);
                 if (transform.position.x < Player.transform.position.x)
                 {
                     rb.AddForce(new Vector2(-weapon.Knockback.x, weapon.Knockback.y), ForceMode2D.Impulse);
