@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 	float horizontalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
+	public float interval;
+	public float lastStep;
     private void Start()
     {
 		hp = GetComponent<HP>();
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
+		
 		if (hp.playerIsDead == true)
 		{
 			animator.SetBool("Dead", true);
@@ -35,11 +38,25 @@ public class PlayerMovement : MonoBehaviour
 		else
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+			if (Mathf.Abs(horizontalMove) > 0.01f && controller.m_Grounded == true) 
+            {
+		
+				if (lastStep < Time.time - interval)
+                {
+					FindObjectOfType<AudioManager>().Play("Pigstep");
+					lastStep = Time.time;
+
+                }
+			}
+
 
 			if (Input.GetButtonDown("Jump"))
 			{
 				jump = true;
 				animator.SetBool("Jump", true);
+				if (controller.m_Grounded == true)
+					{ FindObjectOfType<AudioManager>().Play("Jump"); }
+
 				lastJump = Time.time;
 			}
 
