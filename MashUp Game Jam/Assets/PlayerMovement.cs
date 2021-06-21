@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -41,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
 		if (hp.playerIsDead == true)
 		{
 			animator.SetBool("Dead", true);
+			if (Input.anyKey)
+            {
+				SceneManager.LoadScene(0);
+            }
 		}
 		else
 		{
