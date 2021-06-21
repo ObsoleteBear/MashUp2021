@@ -20,11 +20,16 @@ public class PlayerMovement : MonoBehaviour
 	bool crouch = false;
 	public float interval;
 	public float lastStep;
-    private void Start()
+    public void Start()
     {
 		hp = GetComponent<HP>();
 		animator = GetComponent<Animator>();
 		Attack = GetComponentInChildren<PolygonCollider2D>();
+		Attack.enabled = false;
+		if (Attack.enabled == false)
+        {
+			Debug.Log("disabled");
+        }
     }
 
     // Update is called once per frame
@@ -116,4 +121,12 @@ public class PlayerMovement : MonoBehaviour
     {
 
     }
+	public void DieSound()
+    {
+		FindObjectOfType<AudioManager>().Play("Death");
+    }
+	public void Land()
+    {
+		FindObjectOfType<AudioManager>().Play("Land");
+	}
 }

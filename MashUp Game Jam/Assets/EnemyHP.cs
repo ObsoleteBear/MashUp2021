@@ -48,10 +48,10 @@ public class EnemyHP : MonoBehaviour
                 enemyHP = enemyHP - weapon.damage;
                 lastHit = Time.time;
                 animator.SetBool("Hurt", true);
+                FindObjectOfType<AudioManager>().Play("enemyHit");
                 if (transform.position.x < Player.transform.position.x)
                 {
                     rb.AddForce(new Vector2(-weapon.Knockback.x, weapon.Knockback.y), ForceMode2D.Impulse);
-                    FindObjectOfType<AudioManager>().Play("enemyHit");
                 }
                 else
                 {

@@ -21,6 +21,7 @@ public class followPlayer : MonoBehaviour
     public Vector2 Knockback;
     public Animator playerAnimator;
     public Animator animator;
+    public bool isGuard;
 
     // Start is called before the first frame update
     void Start()
@@ -55,24 +56,29 @@ public class followPlayer : MonoBehaviour
         }
         else
         {
-            if (transform.position.x < player.transform.position.x)
+            if (isGuard == false)
             {
-                animator.SetBool("FacingRight", true);
-            }
-            else
-            {
-                animator.SetBool("FacingRight", false);
-            }
-            if (player.transform.position.y > transform.position.y + playerHeight)
-            {
-
-                if (hasJump == true)
+                if (transform.position.x < player.transform.position.x)
                 {
-                    doJump = true;
+                    animator.SetBool("FacingRight", true);
                 }
                 else
                 {
-                    doJump = false;
+                    animator.SetBool("FacingRight", false);
+                }
+            }
+            if (player.transform.position.y > transform.position.y + playerHeight)
+            {
+                if (isGuard == false)
+                {
+                    if (hasJump == true)
+                    {
+                        doJump = true;
+                    }
+                    else
+                    {
+                        doJump = false;
+                    }
                 }
             }
             else
@@ -81,9 +87,11 @@ public class followPlayer : MonoBehaviour
             }
             playerPosition = new Vector2(player.transform.position.x, transform.position.y);
         }
-        
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
+        if (Vector2.Distance(transform.position, playerPosition) <= 20)
+        {
+            float step = speed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
+        }
 
 
     }
@@ -108,11 +116,12 @@ public class followPlayer : MonoBehaviour
     {
         if (trigger.gameObject.tag == ("Player"))
         {
-            if (hp.lastHit < Time.time - hp.iFrames)
+            if (hp.lastHit < Time.time - hp.iFrames && hp.Health > 0)
             {
                 hp.Health = hp.Health - dmg;
                 hp.lastHit = Time.time;
                 playerAnimator.SetBool("Hurt", true);
+                FindObjectOfType<AudioManager>().Play("Hurt");
                 if (transform.position.x < player.transform.position.x)
                 {
                     playerRb.AddForce(Knockback, ForceMode2D.Impulse);

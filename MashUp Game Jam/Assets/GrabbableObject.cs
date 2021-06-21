@@ -15,6 +15,7 @@ public class GrabbableObject : MonoBehaviour
     public float rotateSpeed;
     public Animator animator;
     public Animator playerAnimator;
+    public bool touchingPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +49,18 @@ public class GrabbableObject : MonoBehaviour
     void Update()
     {
         if (Player == null)
-        { 
-        
-        }else
         {
+
+        } else
+        {
+            if (colliderTag == "Player")
+            {
+                touchingPlayer = true;
+            } else
+            {
+                touchingPlayer = false;
+            }
+
             distanceToPlayer = Vector2.Distance(Player.transform.position, transform.position);
         }
         weaponManager.itemDistance.Add(distanceToPlayer);
