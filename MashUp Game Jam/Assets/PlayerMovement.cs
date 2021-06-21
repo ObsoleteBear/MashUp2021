@@ -26,10 +26,7 @@ public class PlayerMovement : MonoBehaviour
 		animator = GetComponent<Animator>();
 		Attack = GetComponentInChildren<PolygonCollider2D>();
 		Attack.enabled = false;
-		if (Attack.enabled == false)
-        {
-			Debug.Log("disabled");
-        }
+		FindObjectOfType<AudioManager>().Play("Music");
     }
 
     // Update is called once per frame

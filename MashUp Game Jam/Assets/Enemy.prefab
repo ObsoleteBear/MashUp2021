@@ -135,7 +135,7 @@ MonoBehaviour:
   jump: {x: 0, y: 0}
   jumpForce: 250
   hasJump: 0
-  playerHeight: 1.84
+  playerHeight: 1
   doJump: 0
   hp: {fileID: 0}
   dmg: 5
@@ -143,6 +143,9 @@ MonoBehaviour:
   Knockback: {x: 8, y: 2}
   playerAnimator: {fileID: 0}
   animator: {fileID: 0}
+  isGuard: 0
+  enemyHP: {fileID: 0}
+  minDist: 10
 --- !u!114 &370813789125058145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +165,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   Player: {fileID: 0}
   weapon: {fileID: 0}
+  animator: {fileID: 0}
+  Hitbox: {fileID: 370813789125058141}
 --- !u!61 &4349279915927955875
 BoxCollider2D:
   m_ObjectHideFlags: 0

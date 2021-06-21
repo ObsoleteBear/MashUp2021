@@ -16,6 +16,8 @@ public class EnemyHP : MonoBehaviour
     public WeaponManager weapon;
 
     public Animator animator;
+
+    public BoxCollider2D Hitbox;
     // Start is called before the first frame update
     void Start()
     {

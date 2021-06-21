@@ -22,6 +22,8 @@ public class followPlayer : MonoBehaviour
     public Animator playerAnimator;
     public Animator animator;
     public bool isGuard;
+    public EnemyHP enemyHP;
+    public float minDist;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,7 @@ public class followPlayer : MonoBehaviour
         playerRb = player.GetComponent<Rigidbody2D>();
         playerAnimator = player.GetComponent<Animator>();
         animator = GetComponent<Animator>();
+        enemyHP = GetComponent<EnemyHP>();
     }
 
     public void FixedUpdate()
@@ -67,6 +70,10 @@ public class followPlayer : MonoBehaviour
                     animator.SetBool("FacingRight", false);
                 }
             }
+            playerPosition = new Vector2(player.transform.position.x, transform.position.y);
+        }
+        if (Vector2.Distance(transform.position, player.transform.position) <= minDist)
+        {
             if (player.transform.position.y > transform.position.y + playerHeight)
             {
                 if (isGuard == false)
@@ -85,12 +92,9 @@ public class followPlayer : MonoBehaviour
             {
                 doJump = false;
             }
-            playerPosition = new Vector2(player.transform.position.x, transform.position.y);
-        }
-        if (Vector2.Distance(transform.position, playerPosition) <= 20)
-        {
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
+            Debug.Log(gameObject.name + (Vector2.Distance(transform.position, playerPosition)));
         }
 
 
@@ -114,23 +118,27 @@ public class followPlayer : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D trigger)
     {
-        if (trigger.gameObject.tag == ("Player"))
+        if (enemyHP.enemyIsDead == false)
         {
-            if (hp.lastHit < Time.time - hp.iFrames && hp.Health > 0)
+            if (trigger.gameObject.tag == ("Player"))
             {
-                hp.Health = hp.Health - dmg;
-                hp.lastHit = Time.time;
-                playerAnimator.SetBool("Hurt", true);
-                FindObjectOfType<AudioManager>().Play("Hurt");
-                if (transform.position.x < player.transform.position.x)
+                if (hp.lastHit < Time.time - hp.iFrames && hp.Health > 0)
                 {
-                    playerRb.AddForce(Knockback, ForceMode2D.Impulse);
-                } else
-                {
-                    playerRb.AddForce(new Vector2 (-Knockback.x, Knockback.y), ForceMode2D.Impulse);
+                    hp.Health = hp.Health - dmg;
+                    hp.lastHit = Time.time;
+                    playerAnimator.SetBool("Hurt", true);
+                    FindObjectOfType<AudioManager>().Play("Hurt");
+                    if (transform.position.x < player.transform.position.x)
+                    {
+                        playerRb.AddForce(Knockback, ForceMode2D.Impulse);
+                    }
+                    else
+                    {
+                        playerRb.AddForce(new Vector2(-Knockback.x, Knockback.y), ForceMode2D.Impulse);
+                    }
                 }
-            }
 
+            }
         }
     }
 
