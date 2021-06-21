@@ -70,6 +70,7 @@ public class GrabbableObject : MonoBehaviour
                         {
                             Debug.Log("Grabbed an  object");
                             Grabbed = true;
+                            FindObjectOfType<AudioManager>().Play("PickUpWeapon");
                             weaponManager.isHolding = true;
                         }
                     }

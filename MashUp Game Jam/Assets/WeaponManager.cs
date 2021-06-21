@@ -40,6 +40,7 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         if (isHolding == true && Input.GetMouseButtonDown(0))
+            FindObjectOfType<AudioManager>().Play("weaponSwing");
         {
             attackCollider.enabled = true;
         }
