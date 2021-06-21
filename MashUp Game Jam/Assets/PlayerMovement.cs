@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+	public Rigidbody2D rb;
 
 	public CharacterController2D controller;
 
@@ -18,10 +19,14 @@ public class PlayerMovement : MonoBehaviour
 	float horizontalMove = 0f;
 	bool jump = false;
 	bool crouch = false;
+	public bool unlockedDoubleJump = false;
+	public bool hasdoubleJump = true;
+	public bool doubleJump = false;
 	public float interval;
 	public float lastStep;
     public void Start()
     {
+		rb = GetComponent<Rigidbody2D>();
 		hp = GetComponent<HP>();
 		animator = GetComponent<Animator>();
 		Attack = GetComponentInChildren<PolygonCollider2D>();
@@ -39,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else
 		{
+			if (controller.m_Grounded == true)
+            {
+				hasdoubleJump = true; 
+            }
+
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 			if (Mathf.Abs(horizontalMove) > 0.01f && controller.m_Grounded == true) 
             {
@@ -51,17 +61,27 @@ public class PlayerMovement : MonoBehaviour
                 }
 			}
 
-
-			if (Input.GetButtonDown("Jump"))
+			if (controller.m_Grounded == true)
 			{
-				jump = true;
-				animator.SetBool("Jump", true);
-				if (controller.m_Grounded == true)
+				if (Input.GetButtonDown("Jump"))
+				{
+					jump = true;
+					animator.SetBool("Jump", true);
+					if (controller.m_Grounded == true)
 					{ FindObjectOfType<AudioManager>().Play("Jump"); }
 
-				lastJump = Time.time;
-			}
+					lastJump = Time.time;
+				}
+			} else if (unlockedDoubleJump == true && hasdoubleJump == true && Input.GetButtonDown ("Jump"))
+            {
+				doubleJump = true;
+				animator.SetBool("Jump", true);
+			     FindObjectOfType<AudioManager>().Play("Jump"); 
 
+				hasdoubleJump = false;
+			}
+			 
+		    
 			if (Input.GetButton("Crouch"))
 			{
 				if (controller.m_Grounded == true)
@@ -101,9 +121,16 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		
 		// Move our character
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
 		jump = false;
+		if (doubleJump == true)
+        {
+			rb.AddForce(Vector2.up * 400f, ForceMode2D.Force);
+			doubleJump = false;
+        }
+
 	}
 	public void AttackEnd()
     {
