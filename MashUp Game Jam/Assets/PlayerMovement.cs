@@ -36,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
+			if (Mathf.Abs (Input.GetAxisRaw ("Horizontal")) > 1f)
+            {
+				FindObjectOfType<AudioManager>().Play("Footsteps#1");
+            }
+
+
 			if (Input.GetButtonDown("Jump"))
 			{
 				jump = true;
