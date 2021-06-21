@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 0}
   sounds:
-  - name: Hurt
+  - name: Hurt#3
     clip: {fileID: 8300000, guid: 6b7d38a446e555740b046422799ed55a, type: 3}
     volume: 1
     volumeVariance: 0

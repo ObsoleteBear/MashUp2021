@@ -28,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
-		FindObjectOfType<AudioManager>().Play("Hurt#3");
 		if (hp.playerIsDead == true)
 		{
 			animator.SetBool("Dead", true);

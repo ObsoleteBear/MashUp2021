@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHP : MonoBehaviour
@@ -34,7 +35,7 @@ public class EnemyHP : MonoBehaviour
         }
         if (enemyIsDead == true)
         {
-           Destroy(gameObject);
+            animator.SetBool("Dead", true);
         }
     }
 
@@ -58,5 +59,9 @@ public class EnemyHP : MonoBehaviour
             }
 
         }
+    }
+    public void DeathAnimFinish()
+    {
+        Destroy(gameObject);
     }
 }
