@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
+		FindObjectOfType<AudioManager>().Play("Hurt#3");
 		if (hp.playerIsDead == true)
 		{
 			animator.SetBool("Dead", true);
@@ -35,12 +36,6 @@ public class PlayerMovement : MonoBehaviour
 		else
 		{
 			horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
-			if (Mathf.Abs (Input.GetAxisRaw ("Horizontal")) > 1f)
-            {
-				FindObjectOfType<AudioManager>().Play("Footsteps#1");
-            }
-
 
 			if (Input.GetButtonDown("Jump"))
 			{
