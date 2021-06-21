@@ -8,6 +8,9 @@ TagManager:
   - Enemies
   - Grabbables
   - Attack
+  - Transition
+  - Pause
+  - Exit
   layers:
   - Default
   - TransparentFX

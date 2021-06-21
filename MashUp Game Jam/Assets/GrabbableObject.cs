@@ -16,6 +16,9 @@ public class GrabbableObject : MonoBehaviour
     public Animator animator;
     public Animator playerAnimator;
     public bool touchingPlayer;
+    public int weaponDamage;
+    public Vector2 weaponKnockback;
+    public float holdScale;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +51,11 @@ public class GrabbableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Grabbed == true)
+        {
+            weaponManager.Knockback = weaponKnockback;
+            weaponManager.damage = weaponDamage;
+        }
         if (Player == null)
         {
 
@@ -96,7 +104,7 @@ public class GrabbableObject : MonoBehaviour
         {
             gameObject.transform.parent = Player.transform;
             gameObject.transform.localPosition = new Vector2(0.327f, 0.515f);
-            gameObject.transform.localScale = new Vector2 (0.6f, 0.6f);
+            gameObject.transform.localScale = new Vector2 (holdScale, holdScale);
             if (Input.GetMouseButtonDown(0))
             {
                 animator.SetBool("Attack", true);
