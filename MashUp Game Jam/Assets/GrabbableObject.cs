@@ -20,7 +20,7 @@ public class GrabbableObject : MonoBehaviour
     public Vector2 weaponKnockback;
     public float holdScale;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         Player = GameObject.FindWithTag("Player");
         weaponManager = Player.GetComponent<WeaponManager>();
@@ -44,10 +44,6 @@ public class GrabbableObject : MonoBehaviour
         }            
     }
 
-    public void LateUpdate()
-    {
-        weaponManager.itemDistance.Clear();
-    }
     // Update is called once per frame
     void Update()
     {
@@ -56,11 +52,6 @@ public class GrabbableObject : MonoBehaviour
             weaponManager.Knockback = weaponKnockback;
             weaponManager.damage = weaponDamage;
         }
-        if (Player == null)
-        {
-
-        } else
-        {
             if (colliderTag == "Player")
             {
                 touchingPlayer = true;
@@ -69,8 +60,8 @@ public class GrabbableObject : MonoBehaviour
                 touchingPlayer = false;
             }
 
-            distanceToPlayer = Vector2.Distance(Player.transform.position, transform.position);
-        }
+        distanceToPlayer = Vector2.Distance(Player.transform.position, transform.position);
+
         weaponManager.itemDistance.Add(distanceToPlayer);
         if (Input.GetKeyDown("e"))
         {

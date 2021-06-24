@@ -777,7 +777,6 @@ MonoBehaviour:
   canvas: {fileID: 162842781}
   pause: {fileID: 0}
   isPaused: 0
-  exitButton: {fileID: 0}
 --- !u!4 &1009575069
 Transform:
   m_ObjectHideFlags: 0

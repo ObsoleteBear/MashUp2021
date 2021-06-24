@@ -94,7 +94,6 @@ public class followPlayer : MonoBehaviour
             }
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, playerPosition, step);
-            Debug.Log(gameObject.name + (Vector2.Distance(transform.position, playerPosition)));
         }
 
 

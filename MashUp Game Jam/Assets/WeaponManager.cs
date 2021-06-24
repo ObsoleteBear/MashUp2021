@@ -14,8 +14,11 @@ public class WeaponManager : MonoBehaviour
 
     public PolygonCollider2D attackCollider;
 
-    public List<float> itemDistance = new List<float>();
-
+    public List<float> itemDistance;
+    public void LateUpdate()
+    {
+        itemDistance.Clear();
+    }
     public void OnTriggerStay2D(Collider2D trigger)
     {
         if (trigger.tag == ("Grabbables"))
@@ -30,10 +33,11 @@ public class WeaponManager : MonoBehaviour
             triggerTag = null;
         }
     }
-    void Start()
+    public void Awake()
     {
         attackCollider = GetComponentInChildren<PolygonCollider2D>();
         attackCollider.enabled = false;
+        itemDistance = new List<float>();
     }
 
     // Update is called once per frame
